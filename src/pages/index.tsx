@@ -91,14 +91,13 @@ const Home: NextPage = () => {
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
-
-    if (active.id !== over.id) {
-      setItems((items) => {
-        const oldIndex = items.findIndex(({ id }) => id === active.id);
+    const oldIndex = items.findIndex(({ id }) => id === active.id);
         const newIndex = items.findIndex(({ id }) => id === over.id);
-
-        return arrayMove(items, oldIndex, newIndex);
-      });
+        console.log(arrayMove(items, oldIndex, newIndex));
+        const newArray = arrayMove(items, oldIndex, newIndex);
+        
+    if (active.id !== over.id) {
+      setItems(newArray);
     }
   }
   const SortableItem = ({ item }) => {
