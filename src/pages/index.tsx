@@ -130,8 +130,8 @@ const Home: NextPage = () => {
 
     return (
 
-      <div ref={setNodeRef} style={style} {...attributes} {...listeners} className='flex gap-1 items-center justify-between border-solid border-2 border-sky-500 text-white text-3xl'>
-        <input type='checkbox' checked={checkedItems.some((item) => item.id === id)} onChange={() => toggleCheck({ id, checked: !checkedItems.some((item) => item.id === id) })} />
+      <div ref={setNodeRef} style={style} {...attributes} {...listeners} className='flex gap-1 w-full h-12 items-center justify-between border-solid border-2 border-slate-600 text-white text-3xl'>
+        <input className="form-checkbox h-4 w-4" type='checkbox' checked={checkedItems.some((item) => item.id === id)} onChange={() => toggleCheck({ id, checked: !checkedItems.some((item) => item.id === id) })} />
         <span
           style={checkedItems.some((item) => item.id === id) ? { textDecoration: 'line-through' } : {}}
 
@@ -149,7 +149,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>King List</title>
+        <title>The King's List</title>
         <meta name="description" content="A robust fully featured to-do made using t3 stack" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

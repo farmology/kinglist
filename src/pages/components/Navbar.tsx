@@ -10,9 +10,9 @@ const Navbar = () => {
             alt="LA Kings logo" 
             className='h-20'
             />
-            <h1 className='text-white'>The King's List</h1>
+            <h1 className='text-white text-2xl'>The King's List</h1>
             <div className='flex '>
-                <button className='rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20 mt-6'>Toggle goes here</button>
+                
                 <AuthShowcase />
             </div>
 
