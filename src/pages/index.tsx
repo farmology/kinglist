@@ -130,8 +130,8 @@ const Home: NextPage = () => {
 
     return (
 
-      <div ref={setNodeRef} style={style} {...attributes} {...listeners} className='flex gap-1 w-full h-12 items-center justify-between border-solid border-2 border-slate-600 text-white text-3xl'>
-        <input className="form-checkbox h-4 w-4" type='checkbox' checked={checkedItems.some((item) => item.id === id)} onChange={() => toggleCheck({ id, checked: !checkedItems.some((item) => item.id === id) })} />
+      <div ref={setNodeRef} style={style} {...attributes} {...listeners} className='flex gap-2 w-full h-12 items-center justify-between border-solid border-2 border-slate-600 text-white text-3xl'>
+        <input className="form-checkbox h-4 w-4 m-2" type='checkbox' checked={checkedItems.some((item) => item.id === id)} onChange={() => toggleCheck({ id, checked: !checkedItems.some((item) => item.id === id) })} />
         <span
           style={checkedItems.some((item) => item.id === id) ? { textDecoration: 'line-through' } : {}}
 
