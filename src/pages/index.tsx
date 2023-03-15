@@ -96,12 +96,12 @@ const Home: NextPage = () => {
   const handleDragEnd = (event: { active: any; over: any; }) => {
     const { active, over } = event;
     const oldIndex = items.findIndex(({ id }) => id === active.id);
-    console.log(active);
+    
     const newIndex = items.findIndex(({ id }) => id === over.id);
-    console.log(newIndex);
+    
     
     const newArray = arrayMove(items, oldIndex, newIndex);
-    console.log(newArray);
+    
     
     if (active.id !== over.id) {
       
