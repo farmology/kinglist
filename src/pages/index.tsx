@@ -93,7 +93,7 @@ const Home: NextPage = () => {
     setInput('');
   }
 
-  const handleDragEnd = async (event: { active: any; over: any; }) => {
+  const handleDragEnd = (event: { active: any; over: any; }) => {
     const { active, over } = event;
     const oldIndex = items.findIndex(({ id }) => id === active.id);
     console.log(active);
