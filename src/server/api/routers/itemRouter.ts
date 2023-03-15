@@ -69,10 +69,10 @@ export const itemRouter = createTRPCRouter({
             const updates = array.map((item, index) => ({
                 
                     where: {
-                        id: item.id,
+                        id: item.id
                     },
                     data: {
-                        id: index + 2,
+                        id: index + 1,
                     },
                 
             }));

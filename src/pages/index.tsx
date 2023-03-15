@@ -97,7 +97,7 @@ const Home: NextPage = () => {
   const handleDragEnd = async (event) => {
     const { active, over } = event;
     const oldIndex = items.findIndex(({ id }) => id === active.id);
-    console.log(oldIndex);
+    console.log(active);
     const newIndex = items.findIndex(({ id }) => id === over.id);
     console.log(newIndex);
     
@@ -130,7 +130,7 @@ const Home: NextPage = () => {
 
     return (
 
-      <div ref={setNodeRef} style={style} {...attributes} {...listeners} key={id} className='flex gap-1 items-center justify-between border-solid border-2 border-sky-500 text-white text-3xl'>
+      <div ref={setNodeRef} style={style} {...attributes} {...listeners} className='flex gap-1 items-center justify-between border-solid border-2 border-sky-500 text-white text-3xl'>
         <input type='checkbox' checked={checkedItems.some((item) => item.id === id)} onChange={() => toggleCheck({ id, checked: !checkedItems.some((item) => item.id === id) })} />
         <span
           style={checkedItems.some((item) => item.id === id) ? { textDecoration: 'line-through' } : {}}
