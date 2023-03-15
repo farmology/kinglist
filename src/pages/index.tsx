@@ -92,13 +92,14 @@ const Home: NextPage = () => {
   const handleDragEnd = (event) => {
     const { active, over } = event;
     const oldIndex = items.findIndex(({ id }) => id === active.id);
-        const newIndex = items.findIndex(({ id }) => id === over.id);
-        console.log(arrayMove(items, oldIndex, newIndex));
-        const newArray = arrayMove(items, oldIndex, newIndex);
-        
+    const newIndex = items.findIndex(({ id }) => id === over.id);
+    
+    const newArray = arrayMove(items, oldIndex, newIndex);
+    console.log(newArray);
     if (active.id !== over.id) {
       setItems(newArray);
     }
+
   }
   const SortableItem = ({ item }) => {
     const { id, name } = item;
