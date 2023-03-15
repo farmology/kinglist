@@ -8,7 +8,21 @@ import { Item } from "@prisma/client";
 import { useState } from "react";
 import { HiX } from "react-icons/hi";
 import Navbar from "./components/Navbar";
-import {useSortable} from '@dnd-kit/sortable';
+import {
+  DndContext, 
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+  useSortable
+} from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
 
 
@@ -17,6 +31,12 @@ const Home: NextPage = () => {
   const [items, setItems] = useState<Item[]>([]); 
   const [checkedItems, setCheckedItems] = useState<Item[]>([]);
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
   const { mutate: addItem } = api.item.addItem.useMutation({
     onSuccess: (item) => {
       setItems((prev) => [...prev, item])
@@ -55,6 +75,18 @@ const Home: NextPage = () => {
     setInput('');
   }
 
+  const handleDragEnd = (event) => {
+    const {active, over} = event;
+    
+    if (active.id !== over.id) {
+      setItems((items) => {
+        const oldIndex = items.indexOf(active.id);
+        const newIndex = items.indexOf(over.id);
+        
+        return arrayMove(items, oldIndex, newIndex);
+      });
+    }
+  }
   const SortableItem = ({ item }) => {
     const { id, name } = item;
     const {
@@ -73,7 +105,7 @@ const Home: NextPage = () => {
       
    return (
     
-      <li ref={setNodeRef} style={style} {...attributes} {...listeners} key={id} className='flex items-center justify-between border-solid border-2 border-sky-500'>
+      <li ref={setNodeRef} style={style} {...attributes} {...listeners} key={id} className='flex gap-1 items-center justify-between border-solid border-2 border-sky-500 text-white text-3xl'>
                     <input type='checkbox' checked={checkedItems.some((item) => item.id === id)} onChange={() => toggleCheck({id, checked: !checkedItems.some((item) => item.id === id)})}/>
                     <span 
                       style={checkedItems.some((item) => item.id === id) ? {textDecoration: 'line-through'} : {}}
@@ -114,14 +146,20 @@ const Home: NextPage = () => {
           </form>
           
           <div className="flex flex-col items-center gap-2">
-          <ul className="flex flex-col gap-1 text-white text-3xl">
+          <DndContext 
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+          >
+          <SortableContext items={items} strategy={verticalListSortingStrategy}>
               {items.map((item) => {
                 const { id, name} = item
                 return (
                   <SortableItem key={id} item={item} />
                 )
               })}
-            </ul>
+            </SortableContext>
+            </DndContext>
             <button  
               className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20 mt-6" 
               onClick={() => deleteAllItems()}>
