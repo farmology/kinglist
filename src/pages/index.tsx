@@ -53,6 +53,7 @@ const Home: NextPage = () => {
     setInput('');
   }
 
+
   return (
     <>
       <Head>
@@ -82,10 +83,11 @@ const Home: NextPage = () => {
               {items.map((item) => {
                 const { id, name, checked } = item
                 return (
-                <li key={id} className='flex items-center justify-between'>
+                <li key={id} className='flex items-center justify-between border-solid border-2 border-sky-500'>
+                    <input type='checkbox' checked={checkedItems.some((item) => item.id === id)} onChange={() => toggleCheck({id, checked: !checkedItems.some((item) => item.id === id)})}/>
                     <span 
                       style={checkedItems.some((item) => item.id === id) ? {textDecoration: 'line-through'} : {}}
-                      onClick={() => toggleCheck({id, checked: !checkedItems.some((item) => item.id === id)})} 
+                       
                       className='cursor-pointer'
                     >
                       {name}
