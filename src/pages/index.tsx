@@ -48,6 +48,11 @@ const Home: NextPage = () => {
     },
   });
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setInput('');
+  }
+
   return (
     <>
       <Head>
@@ -64,7 +69,7 @@ const Home: NextPage = () => {
             <span className="text-[hsl(280,100%,70%)]">The King's List</span>
           </h1>
           
-          <form>
+          <form onSubmit={handleSubmit}>
             <input type='text' value={input} onChange={(e) => setInput(e.target.value)} />
             <button  
               className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20" 
