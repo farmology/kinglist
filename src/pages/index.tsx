@@ -71,6 +71,28 @@ const Home: NextPage = () => {
           </form>
           </div>
           <div className="flex flex-col items-center gap-2">
+          <ul className="text-white text-3xl">
+              {items.map((item) => {
+                const { id, name } = item
+                return (
+                <li key={id} className='flex items-center justify-between'>
+                    <span 
+                      style={checkedItems.some((item) => item.id === id) ? {textDecoration: 'line-through'} : {}}
+                      onClick={() => toggleCheck({id, checked: items.some((item) => item.id === id)})} 
+                      className='cursor-pointer'
+                    >
+                      {name}
+                    </span>
+                    <HiX onClick={() => deleteItem({id})} className='cursor-pointer'/>
+                </li>
+                )
+              })}
+            </ul>
+            <button  
+              className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20 mt-6" 
+              onClick={() => deleteAllItems()}>
+                Clear All
+            </button>
             <p className="text-2xl text-white">
               {hello.data ? hello.data.greeting : "Loading tRPC query..."}
             </p>
