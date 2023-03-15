@@ -89,12 +89,12 @@ const Home: NextPage = () => {
     },
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     setInput('');
   }
 
-  const handleDragEnd = async (event) => {
+  const handleDragEnd = async (event: { active: any; over: any; }) => {
     const { active, over } = event;
     const oldIndex = items.findIndex(({ id }) => id === active.id);
     console.log(active);
@@ -112,7 +112,7 @@ const Home: NextPage = () => {
     }
 
   }
-  const SortableItem = ({ item }) => {
+  const SortableItem = (item: { id: any; name: any; }) => {
     const { id, name } = item;
     const {
       attributes,

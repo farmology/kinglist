@@ -71,7 +71,7 @@ export const itemRouter = createTRPCRouter({
         }))
         .mutation(async ({ input, ctx }) => {
             const { array } = input;
-            const updates = array.map((item, i) => ({
+            const updates = array.map((item: { id: any; }, i: number) => ({
                 
                     where: {
                         id: item.id
