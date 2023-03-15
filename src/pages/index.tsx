@@ -8,6 +8,8 @@ import { Item } from "@prisma/client";
 import { useState } from "react";
 import { HiX } from "react-icons/hi";
 import Navbar from "./components/Navbar";
+import {useSortable} from '@dnd-kit/sortable';
+import {CSS} from '@dnd-kit/utilities';
 
 
 const Home: NextPage = () => {
@@ -53,6 +55,39 @@ const Home: NextPage = () => {
     setInput('');
   }
 
+  const SortableItem = ({ item }) => {
+    const { id, name } = item;
+    const {
+        attributes,
+        listeners,
+        setNodeRef,
+        transform,
+        transition,
+      } = useSortable({id: id});
+
+      const style = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+      };
+      
+      
+   return (
+    
+      <li ref={setNodeRef} style={style} {...attributes} {...listeners} key={id} className='flex items-center justify-between border-solid border-2 border-sky-500'>
+                    <input type='checkbox' checked={checkedItems.some((item) => item.id === id)} onChange={() => toggleCheck({id, checked: !checkedItems.some((item) => item.id === id)})}/>
+                    <span 
+                      style={checkedItems.some((item) => item.id === id) ? {textDecoration: 'line-through'} : {}}
+                       
+                      className='cursor-pointer'
+                    >
+                      {name}
+                    </span>
+                    <HiX onClick={() => deleteItem({id})} className='cursor-pointer'/>
+                </li>
+    
+  )
+}
+
 
   return (
     <>
@@ -79,21 +114,11 @@ const Home: NextPage = () => {
           </form>
           
           <div className="flex flex-col items-center gap-2">
-          <ul className="text-white text-3xl">
+          <ul className="flex flex-col gap-1 text-white text-3xl">
               {items.map((item) => {
-                const { id, name, checked } = item
+                const { id, name} = item
                 return (
-                <li key={id} className='flex items-center justify-between border-solid border-2 border-sky-500'>
-                    <input type='checkbox' checked={checkedItems.some((item) => item.id === id)} onChange={() => toggleCheck({id, checked: !checkedItems.some((item) => item.id === id)})}/>
-                    <span 
-                      style={checkedItems.some((item) => item.id === id) ? {textDecoration: 'line-through'} : {}}
-                       
-                      className='cursor-pointer'
-                    >
-                      {name}
-                    </span>
-                    <HiX onClick={() => deleteItem({id})} className='cursor-pointer'/>
-                </li>
+                  <SortableItem key={id} item={item} />
                 )
               })}
             </ul>
