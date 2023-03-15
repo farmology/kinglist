@@ -21,7 +21,12 @@ export const itemRouter = createTRPCRouter({
         }),
     getAllItems: publicProcedure
         .query(async ({ ctx }) => {
-            const items = await ctx.prisma.item.findMany()
+            const items = await ctx.prisma.item.findMany({
+                orderBy: {
+                    index: 'asc',
+                }
+            })
+
             return items
 
         }),
@@ -66,13 +71,13 @@ export const itemRouter = createTRPCRouter({
         }))
         .mutation(async ({ input, ctx }) => {
             const { array } = input;
-            const updates = array.map((item, index) => ({
+            const updates = array.map((item, i) => ({
                 
                     where: {
                         id: item.id
                     },
                     data: {
-                        id: index + 1,
+                        index: i + 1,
                     },
                 
             }));
