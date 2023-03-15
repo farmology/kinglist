@@ -6,6 +6,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { api } from "~/utils/api";
 import { Item } from "@prisma/client";
 import { useState } from "react";
+import { HiX } from "react-icons/hi";
 
 
 const Home: NextPage = () => {
@@ -73,12 +74,12 @@ const Home: NextPage = () => {
           <div className="flex flex-col items-center gap-2">
           <ul className="text-white text-3xl">
               {items.map((item) => {
-                const { id, name } = item
+                const { id, name, checked } = item
                 return (
                 <li key={id} className='flex items-center justify-between'>
                     <span 
                       style={checkedItems.some((item) => item.id === id) ? {textDecoration: 'line-through'} : {}}
-                      onClick={() => toggleCheck({id, checked: items.some((item) => item.id === id)})} 
+                      onClick={() => toggleCheck({id, checked: !checkedItems.some((item) => item.id === id)})} 
                       className='cursor-pointer'
                     >
                       {name}

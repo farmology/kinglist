@@ -27,7 +27,7 @@ export const itemRouter = createTRPCRouter({
         }),
     deleteItem: publicProcedure
         .input(z.object({
-            id: z.string(),
+            id: z.number(),
         }))
         .mutation( async ({ input, ctx }) => {
             const { id } = input
@@ -40,7 +40,7 @@ export const itemRouter = createTRPCRouter({
         } ),
     toggleCheck: publicProcedure
         .input(z.object({
-            id: z.string(),
+            id: z.number(),
             checked: z.boolean(),
         }))
         .mutation( async ({ input, ctx }) => {
