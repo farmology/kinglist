@@ -112,7 +112,7 @@ const Home: NextPage = () => {
     }
 
   }
-  const SortableItem = (item: { id: any; name: any; }) => {
+  const SortableItem = ({ item }: { item: any }) => {
     const { id, name } = item;
     const {
       attributes,

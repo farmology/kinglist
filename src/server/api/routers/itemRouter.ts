@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { z } from "zod";
 import {
     createTRPCRouter,
@@ -82,7 +83,7 @@ export const itemRouter = createTRPCRouter({
                 
             }));
             
-            const results = await ctx.prisma.$transaction(updates.map((update) => ctx.prisma.item.update(update)));
+            const results = await ctx.prisma.$transaction(updates.map((update: { select?: Prisma.ItemSelect | null | undefined; data: (Prisma.Without<Prisma.ItemUpdateInput, Prisma.ItemUncheckedUpdateInput> & Prisma.ItemUncheckedUpdateInput) | (Prisma.Without<Prisma.ItemUncheckedUpdateInput, Prisma.ItemUpdateInput> & Prisma.ItemUpdateInput); where: Prisma.ItemWhereUniqueInput; }) => ctx.prisma.item.update(update)));
             console.log(results);
             return results;
         }),
