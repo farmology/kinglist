@@ -76,6 +76,11 @@ const Home: NextPage = () => {
       }
     },
   });
+  const { mutate: updateOrder } = api.item.updateOrder.useMutation({
+    onSuccess: (item) => {
+      console.log(item);
+    },
+  });
   const { data: itemsData, isLoading } = api.item.getAllItems.useQuery(undefined, {
     onSuccess: (itemsData) => {
       setItems(itemsData)
@@ -89,14 +94,20 @@ const Home: NextPage = () => {
     setInput('');
   }
 
-  const handleDragEnd = (event) => {
+  const handleDragEnd = async (event) => {
     const { active, over } = event;
     const oldIndex = items.findIndex(({ id }) => id === active.id);
+    console.log(oldIndex);
     const newIndex = items.findIndex(({ id }) => id === over.id);
+    console.log(newIndex);
     
     const newArray = arrayMove(items, oldIndex, newIndex);
     console.log(newArray);
+    
     if (active.id !== over.id) {
+      
+      updateOrder({ array: newArray });
+      
       setItems(newArray);
     }
 
@@ -119,7 +130,7 @@ const Home: NextPage = () => {
 
     return (
 
-      <li ref={setNodeRef} style={style} {...attributes} {...listeners} key={id} className='flex gap-1 items-center justify-between border-solid border-2 border-sky-500 text-white text-3xl'>
+      <div ref={setNodeRef} style={style} {...attributes} {...listeners} key={id} className='flex gap-1 items-center justify-between border-solid border-2 border-sky-500 text-white text-3xl'>
         <input type='checkbox' checked={checkedItems.some((item) => item.id === id)} onChange={() => toggleCheck({ id, checked: !checkedItems.some((item) => item.id === id) })} />
         <span
           style={checkedItems.some((item) => item.id === id) ? { textDecoration: 'line-through' } : {}}
@@ -129,7 +140,7 @@ const Home: NextPage = () => {
           {name}
         </span>
         <HiX onClick={() => deleteItem({ id })} className='cursor-pointer' />
-      </li>
+      </div>
 
     )
   }

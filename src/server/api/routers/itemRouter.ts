@@ -62,19 +62,23 @@ export const itemRouter = createTRPCRouter({
         }),
     updateOrder: publicProcedure
         .input(z.object({
-            id: z.number(),
-            index: z.number(),
+            array: z.any(),
         }))
         .mutation(async ({ input, ctx }) => {
-            const { id, index } = input
-            const item = await ctx.prisma.item.update({
-                where: {
-                    id,
-                },
-                data: {
-                    id: index,
-                },
-            })
-            return item
+            const { array } = input;
+            const updates = array.map((item, index) => ({
+                
+                    where: {
+                        id: item.id,
+                    },
+                    data: {
+                        id: index + 2,
+                    },
+                
+            }));
+            
+            const results = await ctx.prisma.$transaction(updates.map((update) => ctx.prisma.item.update(update)));
+            console.log(results);
+            return results;
         }),
     })
